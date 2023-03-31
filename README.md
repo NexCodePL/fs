@@ -1,1 +1,1 @@
-# prismic-custom-type
+# fs
