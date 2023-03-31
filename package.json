@@ -1,0 +1,34 @@
+{
+    "name": "@nexcodepl/fs",
+    "version": "1.0.0",
+    "main": "./dist/index.js",
+    "typings": "./dist/index.d.ts",
+    "repository": "https://github.com/NexCodePL/fs.git",
+    "author": "Alexander Stefański <alex@nexcode.pl>",
+    "license": "MIT",
+    "type": "module",
+    "keywords": [
+        "nexcodepl",
+        "fs"
+    ],
+    "private": false,
+    "scripts": {
+        "build": "tsc",
+        "lint": "yarn eslint . --ext .ts",
+        "prepublishOnly": "yarn lint",
+        "preversion": "yarn lint",
+        "publish:npm": "npm publish --access public"
+    },
+    "dependencies": {},
+    "devDependencies": {
+        "@types/node": "^18.15.11",
+        "@typescript-eslint/eslint-plugin": "^5.57.0",
+        "@typescript-eslint/parser": "^5.57.0",
+        "eslint": "^8.37.0",
+        "prettier": "^2.8.7",
+        "typescript": "^5.0.3"
+    },
+    "files": [
+        "dist/**/*"
+    ]
+}
