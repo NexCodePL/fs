@@ -1,5 +1,13 @@
-import { extname, dirname } from "path";
-import { mkdir as mkdirRaw, access, writeFile as writeFileRaw, readFile as readFileRaw } from "fs/promises";
+import { extname, dirname, join as pathJoin } from "path";
+import {
+    mkdir as mkdirRaw,
+    access,
+    writeFile as writeFileRaw,
+    readFile as readFileRaw,
+    copyFile as copyFileRaw,
+    readdir,
+    stat,
+} from "fs/promises";
 import { constants } from "fs";
 
 export async function mkdir(path: string): Promise<void> {
@@ -45,4 +53,36 @@ export async function readFile(path: string): Promise<string | undefined> {
     } catch (e) {
         return undefined;
     }
+}
+
+export async function copyFile(from: string, to: string): Promise<void> {
+    await mkdir(to);
+    await copyFileRaw(from, to);
+}
+
+export async function getMatchingFiles(directory: string, matchExtension: string[]): Promise<string[]> {
+    const matchedFiles: string[] = [];
+    const dirsToVisit: string[] = [directory];
+
+    while (dirsToVisit.length > 0) {
+        const dir = dirsToVisit.pop();
+        if (!dir) continue;
+
+        const dirContent = await readdir(dir, { withFileTypes: true });
+
+        for (const entry of dirContent) {
+            const name = pathJoin(dir, entry.name);
+
+            if ((await stat(name)).isDirectory()) {
+                dirsToVisit.push(name);
+                continue;
+            }
+
+            if (matchExtension.includes(extname(name))) {
+                matchedFiles.push(name);
+            }
+        }
+    }
+
+    return matchedFiles;
 }

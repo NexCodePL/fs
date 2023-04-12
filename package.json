@@ -1,6 +1,6 @@
 {
     "name": "@nexcodepl/fs",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "main": "./dist/index.js",
     "typings": "./dist/index.d.ts",
     "repository": "https://github.com/NexCodePL/fs.git",
